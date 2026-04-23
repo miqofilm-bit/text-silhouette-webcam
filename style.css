@@ -1,0 +1,232 @@
+/* =====================================================
+   PRESENCE — style.css
+   Art-installation typographic silhouette experience
+   ===================================================== */
+
+:root {
+  --bg:        #080808;
+  --fg:        #f0f0f0;
+  --accent:    #c8ff00;
+  --panel-bg:  rgba(4, 4, 4, 0.82);
+  --border:    rgba(255,255,255,0.08);
+  --mono:      'DM Mono', 'Courier New', monospace;
+  --display:   'Orbitron', sans-serif;
+  --radius:    3px;
+}
+
+/* Inverted palette applied via class on <body> */
+body.inv {
+  --bg:  #f8f8f8;
+  --fg:  #0a0a0a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  touch-action: none;
+}
+
+/* ── Main canvas ── */
+#stage {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%; height: 100%;
+  cursor: none;
+}
+
+/* ── Hidden elements ── */
+#cam, #seg-in {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  width: 1px; height: 1px;
+}
+
+/* ── Control panel ── */
+#panel {
+  position: fixed;
+  top: 16px; right: 16px;
+  width: 220px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  z-index: 10;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.7);
+  font-size: 11px;
+  transition: opacity 0.4s;
+}
+
+#panel.faded { opacity: 0.18; }
+#panel:hover, #panel:focus-within { opacity: 1 !important; }
+
+#panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+}
+
+#panel-toggle {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 2px;
+  transition: color 0.15s, transform 0.25s;
+  line-height: 1;
+}
+#panel-toggle:hover { color: var(--fg); }
+#panel.closed #panel-toggle { transform: rotate(180deg); }
+
+#panel-body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  max-height: 400px;
+  transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s;
+}
+#panel.closed #panel-body {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.row.col { flex-direction: column; align-items: flex-start; gap: 5px; }
+
+.lbl {
+  flex: 1;
+  color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+.lbl em { font-style: normal; color: var(--fg); margin-left: 3px; }
+
+/* Toggle pill */
+.pill {
+  padding: 2px 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: 48px;
+  text-align: center;
+}
+.pill[data-on="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+/* Sliders */
+input[type=range] {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 2px;
+  cursor: pointer;
+}
+
+/* Select */
+select {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 4px 6px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+select:focus { outline: none; border-color: var(--accent); }
+option { background: #111; }
+
+/* Perf readout */
+#perf {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: rgba(255,255,255,0.22);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+#perf span { display: block; }
+#fps-r, #fps-s { color: var(--accent); }
+
+/* ── Boot overlay ── */
+#boot {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: var(--bg);
+  z-index: 100;
+  transition: opacity 0.7s ease;
+}
+#boot.gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#boot-ring {
+  width: 56px; height: 56px;
+  border: 2px solid rgba(255,255,255,0.08);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1.1s linear infinite;
+}
+
+#boot-msg {
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.5);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  #panel {
+    top: auto;
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+}

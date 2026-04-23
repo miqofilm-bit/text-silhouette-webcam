@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>PRESENCE</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Distinctive mono font — loaded via CDN for static hosting -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- The one and only output surface -->
+  <canvas id="stage"></canvas>
+
+  <!-- Hidden webcam -->
+  <video id="cam" autoplay playsinline muted></video>
+
+  <!-- Tiny low-res segmentation buffer (hidden) -->
+  <canvas id="seg-in"></canvas>
+
+  <!-- Control panel -->
+  <aside id="panel">
+    <header id="panel-head">
+      <span class="wordmark">PRESENCE</span>
+      <button id="panel-toggle" aria-label="collapse">◂</button>
+    </header>
+    <div id="panel-body">
+
+      <div class="row">
+        <span class="lbl">Text</span>
+        <button class="pill active" id="btn-anim" data-on="true">LIVE</button>
+      </div>
+
+      <div class="row">
+        <span class="lbl">Invert</span>
+        <button class="pill" id="btn-invert" data-on="false">OFF</button>
+      </div>
+
+      <div class="row col">
+        <span class="lbl">Size <em id="sz-val">16</em>px</span>
+        <input type="range" id="sl-size" min="8" max="56" value="16" step="1" />
+      </div>
+
+      <div class="row col">
+        <span class="lbl">Drift <em id="sp-val">1.0</em>×</span>
+        <input type="range" id="sl-speed" min="0" max="60" value="12" step="1" />
+      </div>
+
+      <div class="row col">
+        <span class="lbl">Source</span>
+        <select id="sel-src">
+          <option value="manifesto">MANIFESTO</option>
+          <option value="code">CODE</option>
+          <option value="glitch">GLITCH</option>
+          <option value="haiku">HAIKU</option>
+          <option value="binary">BINARY</option>
+        </select>
+      </div>
+
+      <div id="perf">
+        <span>▸ RENDER <span id="fps-r">0</span>fps</span>
+        <span>▸ SEG <span id="fps-s">0</span>fps</span>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Boot overlay -->
+  <div id="boot">
+    <div id="boot-ring"></div>
+    <p id="boot-msg">INITIALISING</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
