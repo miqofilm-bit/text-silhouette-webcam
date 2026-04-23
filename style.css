@@ -1,158 +1,20 @@
-/* =========================================================
-   FIELD — style.css
-   Reactive generative typography installation
-   ========================================================= */
-
-:root {
-  --bg:      #050505;
-  --fg:      #e8e8e8;
-  --hi:      #a8ff3e;
-  --dim:     rgba(255,255,255,0.12);
-  --glass:   rgba(6,6,6,0.80);
-  --mono:    'IBM Plex Mono', 'Courier New', monospace;
-  --disp:    'Unbounded', sans-serif;
-  --r:       2px;
-}
-body.inv {
-  --bg:  #f2f2f0;
-  --fg:  #080808;
-  --dim: rgba(0,0,0,0.10);
-  --glass: rgba(242,242,240,0.85);
-}
-
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 html,body{
-  width:100%;height:100%;
+  margin:0;
+  padding:0;
   overflow:hidden;
-  background:var(--bg);
-  color:var(--fg);
-  font-family:var(--mono);
+  background:black;
 }
 
-/* ── Canvas ── */
-#stage{
-  position:fixed;inset:0;
-  display:block;width:100%;height:100%;
-  image-rendering:pixelated; /* keep it crisp */
-}
-
-/* ── Hidden elements ── */
-#cam,#seg-in{
-  position:absolute;visibility:hidden;
-  pointer-events:none;width:1px;height:1px;
-}
-
-/* ── Panel ── */
-#panel{
-  position:fixed;top:16px;right:16px;
-  width:210px;
-  background:var(--glass);
-  border:1px solid var(--dim);
-  border-radius:var(--r);
-  backdrop-filter:blur(16px) saturate(1.3);
-  -webkit-backdrop-filter:blur(16px) saturate(1.3);
-  z-index:20;
-  box-shadow:0 8px 40px rgba(0,0,0,0.55);
-  font-size:11px;
-  transition:opacity .35s;
-}
-#panel.fade{opacity:.15}
-#panel:hover,#panel:focus-within{opacity:1!important}
-
-#ph{
-  display:flex;align-items:center;
-  justify-content:space-between;
-  padding:9px 12px 7px;
-  border-bottom:1px solid var(--dim);
-}
-.logo{
-  font-family:var(--disp);
-  font-size:11px;letter-spacing:.3em;
-  color:var(--hi);font-weight:700;
-}
-#pt{
-  background:none;border:none;
-  color:rgba(255,255,255,.3);
-  cursor:pointer;font-size:13px;
-  padding:0 2px;
-  transition:color .15s,transform .25s;
-}
-#pt:hover{color:var(--fg)}
-#panel.closed #pt{transform:rotate(180deg)}
-
-#pb{
-  padding:10px 12px 12px;
-  display:flex;flex-direction:column;gap:9px;
-  max-height:420px;
-  transition:max-height .3s ease,padding .3s,opacity .25s;
-  overflow:hidden;
-}
-#panel.closed #pb{max-height:0;padding-top:0;padding-bottom:0;opacity:0}
-
-.row{display:flex;align-items:center;gap:8px}
-.row.stack{flex-direction:column;align-items:flex-start;gap:4px}
-label{flex:1;color:rgba(255,255,255,.45);white-space:nowrap}
-label b{color:var(--fg);font-weight:400;margin-left:3px}
-
-input[type=range]{
-  width:100%;accent-color:var(--hi);
-  height:2px;cursor:pointer;
-}
-select{
+#c{
+  position:fixed;
+  inset:0;
   width:100%;
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--dim);
-  color:var(--fg);
-  font-family:var(--mono);font-size:10px;
-  letter-spacing:.05em;
-  padding:4px 6px;border-radius:var(--r);cursor:pointer;
-}
-select:focus{outline:none;border-color:var(--hi)}
-option{background:#111}
-
-/* toggles */
-.tog{
-  padding:2px 10px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.08em;
-  border:1px solid rgba(255,255,255,.18);border-radius:20px;
-  background:transparent;color:rgba(255,255,255,.3);
-  cursor:pointer;transition:all .15s;min-width:44px;
-}
-.tog.on{background:var(--hi);border-color:var(--hi);color:#000}
-
-#stat{
-  display:flex;justify-content:space-between;
-  color:rgba(255,255,255,.18);font-size:9px;letter-spacing:.04em;
-  margin-top:2px;
-}
-#fr,#sr{color:var(--hi)}
-
-/* ── Boot veil ── */
-#veil{
-  position:fixed;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:20px;
-  background:var(--bg);z-index:50;
-  transition:opacity .7s;
-}
-#veil.gone{opacity:0;pointer-events:none}
-
-#vring{
-  width:52px;height:52px;
-  border:1.5px solid rgba(255,255,255,.08);
-  border-top-color:var(--hi);
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
-#vmsg{
-  font-family:var(--disp);
-  font-size:11px;letter-spacing:.28em;
-  color:rgba(255,255,255,.4);
+  height:100%;
 }
 
-@keyframes spin{to{transform:rotate(360deg)}}
-
-@media(max-width:480px){
-  #panel{top:auto;bottom:14px;right:10px;left:10px;width:auto}
+#v,#seg{
+  position:absolute;
+  width:1px;
+  height:1px;
+  opacity:0;
 }
