@@ -4,75 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <title>PRESENCE</title>
+  <title>FIELD</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Distinctive mono font — loaded via CDN for static hosting -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;400;600&family=Unbounded:wght@200;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- The one and only output surface -->
+  <!-- Single output surface -->
   <canvas id="stage"></canvas>
 
-  <!-- Hidden webcam -->
+  <!-- Hidden video + low-res seg input -->
   <video id="cam" autoplay playsinline muted></video>
-
-  <!-- Tiny low-res segmentation buffer (hidden) -->
   <canvas id="seg-in"></canvas>
 
   <!-- Control panel -->
-  <aside id="panel">
-    <header id="panel-head">
-      <span class="wordmark">PRESENCE</span>
-      <button id="panel-toggle" aria-label="collapse">◂</button>
+  <nav id="panel">
+    <header id="ph">
+      <span class="logo">FIELD</span>
+      <button id="pt">◂</button>
     </header>
-    <div id="panel-body">
+    <div id="pb">
 
       <div class="row">
-        <span class="lbl">Text</span>
-        <button class="pill active" id="btn-anim" data-on="true">LIVE</button>
+        <label>Live</label>
+        <button class="tog on" id="b-anim" data-v="1">ON</button>
       </div>
-
       <div class="row">
-        <span class="lbl">Invert</span>
-        <button class="pill" id="btn-invert" data-on="false">OFF</button>
+        <label>Invert</label>
+        <button class="tog" id="b-inv" data-v="0">OFF</button>
       </div>
-
-      <div class="row col">
-        <span class="lbl">Size <em id="sz-val">16</em>px</span>
-        <input type="range" id="sl-size" min="8" max="56" value="16" step="1" />
+      <div class="row stack">
+        <label>Density <b id="v-den">40</b></label>
+        <input type="range" id="s-den" min="10" max="120" value="40" />
       </div>
-
-      <div class="row col">
-        <span class="lbl">Drift <em id="sp-val">1.0</em>×</span>
-        <input type="range" id="sl-speed" min="0" max="60" value="12" step="1" />
+      <div class="row stack">
+        <label>React <b id="v-rx">6</b></label>
+        <input type="range" id="s-rx" min="1" max="12" value="6" />
       </div>
-
-      <div class="row col">
-        <span class="lbl">Source</span>
-        <select id="sel-src">
-          <option value="manifesto">MANIFESTO</option>
+      <div class="row stack">
+        <label>Size <b id="v-sz">14</b>px</label>
+        <input type="range" id="s-sz" min="8" max="40" value="14" />
+      </div>
+      <div class="row stack">
+        <label>Source</label>
+        <select id="sel">
+          <option value="signal">SIGNAL</option>
+          <option value="body">BODY</option>
           <option value="code">CODE</option>
+          <option value="void">VOID</option>
           <option value="glitch">GLITCH</option>
-          <option value="haiku">HAIKU</option>
-          <option value="binary">BINARY</option>
         </select>
       </div>
-
-      <div id="perf">
-        <span>▸ RENDER <span id="fps-r">0</span>fps</span>
-        <span>▸ SEG <span id="fps-s">0</span>fps</span>
-      </div>
-
+      <footer id="stat">
+        <span>▸ <span id="fr">0</span> fps</span>
+        <span>▸ seg <span id="sr">0</span> fps</span>
+      </footer>
     </div>
-  </aside>
+  </nav>
 
-  <!-- Boot overlay -->
-  <div id="boot">
-    <div id="boot-ring"></div>
-    <p id="boot-msg">INITIALISING</p>
+  <!-- Boot veil -->
+  <div id="veil">
+    <div id="vring"></div>
+    <p id="vmsg">INITIALISING FIELD</p>
   </div>
 
   <script src="script.js"></script>
